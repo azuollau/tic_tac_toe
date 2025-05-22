@@ -1,0 +1,49 @@
+import unittest
+
+class TestLenta(unittest.TestCase):
+
+    def setUp(self):
+        self.lenta = Lenta()
+
+    def test_pradzios_lenta_tuscia(self):
+        for row in self.lenta._lenta:
+            self.assertEqual(row, [' ', ' ', ' '])
+
+    def test_ar_laisvas(self):
+        self.assertTrue(self.lenta.ar_laisvas(0, 0))
+        self.lenta._lenta[0][0] = 'X'
+        self.assertFalse(self.lenta.ar_laisvas(0, 0))
+
+    def test_padeti_zymekli(self):
+        self.assertTrue(self.lenta.padeti_zymekli(1, 1, 'X'))
+        self.assertEqual(self.lenta._lenta[1][1], 'X')
+        self.assertFalse(self.lenta.padeti_zymekli(1, 1, 'O'))
+
+    def test_ar_pilna(self):
+        self.assertFalse(self.lenta.ar_pilna())
+        for i in range(3):
+            for j in range(3):
+                self.lenta._lenta[i][j] = 'O'
+        self.assertTrue(self.lenta.ar_pilna())
+
+    def test_tikrinti_laimetoja_eilute(self):
+        self.lenta._lenta[0] = ['X', 'X', 'X']
+        self.assertTrue(self.lenta._tikrinti_laimetoja('X'))
+
+    def test_tikrinti_laimetoja_stulpelis(self):
+        for i in range(3):
+            self.lenta._lenta[i][2] = 'O'
+        self.assertTrue(self.lenta._tikrinti_laimetoja('O'))
+
+    def test_tikrinti_laimetoja_istrizaine(self):
+        for i in range(3):
+            self.lenta._lenta[i][i] = 'X'
+        self.assertTrue(self.lenta._tikrinti_laimetoja('X'))
+
+        self.setUp()
+        for i in range(3):
+            self.lenta._lenta[i][2 - i] = 'O'
+        self.assertTrue(self.lenta._tikrinti_laimetoja('O'))
+
+
+unittest.main(argv=[''], verbosity=2, exit=False)
